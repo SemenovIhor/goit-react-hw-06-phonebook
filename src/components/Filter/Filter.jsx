@@ -3,7 +3,7 @@ import { addFilter } from "redux/filterSlice/filterSlice";
 
 export const Filter = () => {
 
-  const dispatch = useDispatch(state => state.filter)
+  const dispatch = useDispatch()
 
   return (
     <>

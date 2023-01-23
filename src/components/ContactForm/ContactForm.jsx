@@ -1,17 +1,25 @@
 import { nanoid } from "nanoid";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addContacts } from "redux/contactsSlice/contactsSlice";
+import { getContacts } from 'redux/selectors/selectors';
 
-export const ContactForm = ({onSubmit}) => {
-  const dispatch = useDispatch(state => state.contacts)
+export const ContactForm = () => {
+  const dispatch = useDispatch()
+  const contacts = useSelector(getContacts)
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const form = e.target
     const name = form.elements.name;
     const number = form.elements.number;
-    dispatch(addContacts({name: name.value , number: number.value, id: nanoid()}))
-    form.reset()
+    const contact = {name: name.value , number: number.value, id: nanoid()}
+    
+    if (contacts.some(contactInput => contactInput.name.toLowerCase() === contact.name.toLowerCase())) {
+      alert("Hello");
+    } else {
+      dispatch(addContacts(contact))
+      form.reset()
+    };
   }
 
   return (
